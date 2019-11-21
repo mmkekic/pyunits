@@ -31,45 +31,41 @@ class phval:
     def __add__(self, o):
         """ Addition function, both values should have the same untis or not units, 
         with a float asumes the float to have the units of the phval"""
-        if not isinstance(o,phval) and self.v[1]==0:
-            return  phval(o + self.v[0], 0)
+        if not isinstance(o,phval):
+            return  phval(o + self.v[0], self.v[1]) 
         elif isinstance(o,phval) and o.v[1]==self.v[1]:
             return  phval(o.v[0] + self.v[0], self.v[1])
         else:
-            return  phval(o + self.v[0], self.v[1])
             raise TypeError
 
     def __radd__(self, o):
         """ right addition function, both values should have the same untis,
         with a float asumes the float to have the units of the phval"""
-        if not isinstance(o,phval) and self.v[1]==0:
-            return  phval(o + self.v[0], 0)
+        if not isinstance(o,phval):
+            return  phval(o + self.v[0], self.v[1])
         elif isinstance(o,phval) and o.v[1]==self.v[1]:
             return  phval(o.v[0] + self.v[0], self.v[1])
         else:
-            return  phval(o + self.v[0], self.v[1])
             raise TypeError
 
     def __sub__(self, o):
         """ substraction, both values should have the same untis or not units,
         with a float asumes the float to have the units of the phval"""
-        if not isinstance(o,phval) and self.v[1]==0:
-            return  phval(self.v[0] - o, 0)
+        if not isinstance(o,phval):
+            return  phval(self.v[0] - o, self.v[1])
         elif isinstance(o,phval) and o.v[1]==self.v[1]:
             return  phval(self.v[0] - o.v[0], self.v[1])
         else:
-            return  phval(self.v[0] - o, self.v[1])
             raise TypeError
 
     def __rsub__(self, o):
         """ right addition function, both values should have the same untis, 
         with a float asumes the float to have the units of the phval"""
-        if not isinstance(o,phval) and self.v[1]==0:
-            return  phval(o - self.v[0], 0)
+        if not isinstance(o,phval):
+            return  phval(o - self.v[0], self.v[1])
         elif isinstance(o,phval) and o.v[1]==self.v[1]:
             return  phval(o.v[0] - self.v[0], self.v[1])
         else:
-            return  phval(o - self.v[0], self.v[1])
             raise TypeError
             
     def __mul__(self, o):
