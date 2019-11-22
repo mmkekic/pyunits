@@ -1,0 +1,10 @@
+!var UNITS_SYSTEM natural
+!message Natural units selected (hbar = c = epsilon0 = 1)
+!prompt (Natural)
++eV        !
++kg        5.60958865002069e+35 eV
++s         1.51926746070816e+15 eV^(-1)
++m         5067730.75895111 eV^(-1)
++A         1244.06470848693 eV
++K         8.6173301e-05 eV
+!endvar
