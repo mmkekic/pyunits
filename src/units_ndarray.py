@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 COMPARISON_UFUNC = {np.greater, np.greater_equal, np.less, np.less_equal, np.not_equal, np.equal}
 
