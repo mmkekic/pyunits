@@ -48,21 +48,29 @@ class phval(np.ndarray):
         list_units = [inp.units if isinstance(inp, phval) else 0 for inp in inputs]
         casted_inputs = [inp.view(np.ndarray) if isinstance(inp, phval) else inp for inp in inputs]
 
+        if ufunc == np.power:
+            units = list_units[0] * inputs[1]
+            print(units)
+            if type(units)==int:
+                return phval(ufunc(*casted_inputs), units=units)
+            else:
+                raise TypeError
+
         if ufunc == np.negative:
-            return phval(ufunc(*casted_inputs), units = list_units[0])
+            return phval(ufunc(*casted_inputs), units=list_units[0])
 
         if ufunc in COMPARISON_UFUNC.union([np.add, np.subtract]):
             if list_units[0] == list_units[1]:
-                return phval(ufunc(*casted_inputs), units = list_units[0])
+                return phval(ufunc(*casted_inputs), units=list_units[0])
             else:
                 raise TypeError
         if ufunc == np.multiply:
             units = list_units[0] + list_units[1]
-            return phval(ufunc(*casted_inputs), units = units)
+            return phval(ufunc(*casted_inputs), units=units)
 
         if ufunc == np.divide:
             units = list_units[0] - list_units[1]
-            return phval(ufunc(*casted_inputs), units = units)
+            return phval(ufunc(*casted_inputs), units=units)
 
         else:
             raise TypeError
