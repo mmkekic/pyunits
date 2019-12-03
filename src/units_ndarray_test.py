@@ -30,3 +30,18 @@ def test_operations(units):
     assert z.units == x.units + y.units
 
 
+def test_plot():
+    import matplotlib.pyplot as plt
+
+    x_units='kg'
+    y_units='s'
+
+    x=u.phval(np.linspace(0.1,10,100), x_units)
+    y=u.phval(np.linspace(0.1,10,100), y_units)
+
+    plt.plot(x.val_u(x_units), y.val_u(y_units))
+    plt.xlabel(x_units)
+    plt.ylabel(y_units)
+    #    plt.show()
+
+
