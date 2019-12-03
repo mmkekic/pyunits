@@ -15,7 +15,7 @@ class phval(np.ndarray):
         else:
             raise TypeError
         if units != 0:
-            obj = np.asarray(input_array).view(cls)
+            obj = np.asarray(obj).view(cls)
             obj.units = units
         return obj
 
