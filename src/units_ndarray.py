@@ -14,9 +14,9 @@ class phval(np.ndarray):
             units   = pw
         else:
             raise TypeError
-        if units != 0:
-            obj = np.asarray(obj).view(cls)
-            obj.units = units
+
+        obj = np.asarray(obj).view(cls)
+        obj.units = units
         return obj
 
     @property
