@@ -1,5 +1,6 @@
 import pytest
 from pytest import mark
+from pytest import raises
 
 import units_ndarray as u
 import numpy         as np
@@ -79,3 +80,11 @@ def test_integration_odeint():
     # solve ODE
     y = odeint(model,y0,t.values)
 
+
+def test_unitless_functions():
+    kg = u.phval(1,"kg")
+    eV = u.phval(1,"eV")
+    unitless_fun=[np.sin, np.cos, np.exp, np.arcsin, np.arccos, np.tan, np.arctan, np.log, np.log10]
+    with raises(u.UnitError):
+        for f in unitless_fun:
+            f(kg)
