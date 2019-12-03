@@ -10,7 +10,7 @@ def test_creates_class(units):
     u.phval(1., units)
 
 
-@mark.parametrize("units", [['kg*m/s^2', 'N']])
+@mark.parametrize("units", [['kg*m/s^2', 'N'], ['kg', 'eV'],['s','1/eV']])
 def test_operations(units):
     x=u.phval(1, units[0])
     y=u.phval(1, units[1])
@@ -29,4 +29,4 @@ def test_operations(units):
     assert float(z) == float(x)*float(y)
     assert z.units == x.units + y.units
 
-print(u.phval.strunit(1.,"N"))
+
