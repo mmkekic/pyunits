@@ -45,15 +45,6 @@ def test_plot():
     plt.ylabel(y_units)
     #    plt.show()
 
-
-def decorator(model):
-    def model_mod(*args):
-        returned = model(*args)
-        values, units = returned.values, returned.units
-        return values
-    return model_mod
-
-
 def test_integration_odeint():
     from scipy.integrate import odeint
     N = u.phval(1,"N")
@@ -63,7 +54,6 @@ def test_integration_odeint():
 
 
     # function that returns dy/dt
-    @decorator
     def model(y,t):
         k = 0.3*N/m
         dydt = -k * y
@@ -78,12 +68,11 @@ def test_integration_odeint():
 
 
     # solve ODE
-    y = odeint(model,y0,t.values)
+    y = odeint(model,y0,t)
 
 
 def test_unitless_functions():
     kg = u.phval(1,"kg")
-    eV = u.phval(1,"eV")
     unitless_fun=[np.sin, np.cos, np.exp, np.arcsin, np.arccos, np.tan, np.arctan, np.log, np.log10]
     with raises(u.UnitError):
         for f in unitless_fun:
