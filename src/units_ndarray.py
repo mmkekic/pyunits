@@ -75,10 +75,10 @@ class phval(np.ndarray):
             return phval(ufunc(*casted_inputs), units=list_units[0])
 
         if ufunc in COMPARISON_UFUNC.union([np.add, np.subtract]):
-            if list_units[0] == list_units[1]:
+            if (list_units[0] == list_units[1]) or any(np.all(inputs == 0) for inputs in casted_inputs):
                 return phval(ufunc(*casted_inputs), units=list_units[0])
             else:
-                raise TypeError
+                raise UnitError("Can't compare non-zero values with different units!")
         if ufunc == np.multiply:
             units = list_units[0] + list_units[1]
             return phval(ufunc(*casted_inputs), units=units)
