@@ -45,3 +45,37 @@ def test_plot():
     #    plt.show()
 
 
+def decorator(model):
+    def model_mod(*args):
+        returned = model(*args)
+        values, units = returned.values, returned.units
+        return values
+    return model_mod
+
+
+def test_integration_odeint():
+    from scipy.integrate import odeint
+    N = u.phval(1,"N")
+    kg = u.phval(1,"kg")
+    m= u.phval(1,"m")
+    s=u.phval(1,"s")
+
+
+    # function that returns dy/dt
+    @decorator
+    def model(y,t):
+        k = 0.3*N/m
+        dydt = -k * y
+        return dydt
+
+    # initial condition
+    y0 = 5*m
+
+    # time points
+    t = np.linspace(0,20)*s
+    #t.astype(np.float64, casting="unsafe")
+
+
+    # solve ODE
+    y = odeint(model,y0,t.values)
+
