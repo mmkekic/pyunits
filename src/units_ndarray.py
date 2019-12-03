@@ -2,6 +2,9 @@ import numpy as np
 import os
 
 COMPARISON_UFUNC = {np.greater, np.greater_equal, np.less, np.less_equal, np.not_equal, np.equal}
+UNITLESS_UFUNC   = {np.sin, np.cos, np.exp, np.arcsin, np.arccos, np.tan, np.arctan, np.log, np.log10}
+
+class UnitError(Exception) : pass
 
 class phval(np.ndarray):
     def __new__(cls, input_array, units=None):
@@ -52,13 +55,21 @@ class phval(np.ndarray):
         list_units = [inp.units if isinstance(inp, phval) else 0 for inp in inputs]
         casted_inputs = [inp.view(np.ndarray) if isinstance(inp, phval) else inp for inp in inputs]
 
+
         if ufunc == np.power:
             units = list_units[0] * inputs[1]
-            print(units)
             if type(units)==int:
                 return phval(ufunc(*casted_inputs), units=units)
             else:
-                raise TypeError
+                raise UnitError("Values with units only have integer powers")
+
+        if ufunc in UNITLESS_UFUNC:
+            units = list_units[0]
+            if units==0:
+                return phval(ufunc(*casted_inputs), units=units)
+            else:
+                raise UnitError("This is a unitless fucntion, divide by some physical scale!")
+
 
         if ufunc == np.negative:
             return phval(ufunc(*casted_inputs), units=list_units[0])
