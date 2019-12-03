@@ -88,3 +88,16 @@ def test_unitless_functions():
     with raises(u.UnitError):
         for f in unitless_fun:
             f(kg)
+
+
+def test_comparison_functions():
+    comparison_func = {np.greater, np.greater_equal, np.less, np.less_equal, np.not_equal, np.equal}
+    ev1  = u.phval(1,1)
+    ev2  = u.phval(10,1)
+    noev = u.phval(1,-1)
+    zero = u.phval(0., -1)
+    for f in comparison_func:
+        f(ev1, ev2)
+        f(zero, ev1)
+        with raises(u.UnitError):
+            f(ev1, noev)
