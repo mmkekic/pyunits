@@ -23,6 +23,10 @@ class phval(np.ndarray):
     def values(self):
         return self.view(np.ndarray)
 
+    def val_u(self, uname):
+        if uname:
+            return (self/phval(1., uname)).view(np.ndarray)
+
     @staticmethod
     def strunit(a,st):
         """It returs the arguments for the phval initialization with values "a" and units given 
