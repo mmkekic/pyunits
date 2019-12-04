@@ -68,9 +68,23 @@ def test_integration_odeint():
 
 
     # solve ODE
-    y = odeint(model,y0,t)
+    y = odeint(model,y0,t.values)
+
+def test_integration():
+    import scipy.integrate as integrate
+    m = u.phval(1,"m")
+    s = u.phval(1,"s")
+
+    # Velocity in m/s 
+    def v(t):
+        a=10*m/(s*s)
+        return a*t
+
+    integral=u.phval(integrate.quad(v, 0*s, 10*s)[0], "1/eV")
+    print(integral.str("m"))
 
 
+    
 def test_unitless_functions():
     kg = u.phval(1,"kg")
     unitless_fun=[np.sin, np.cos, np.exp, np.arcsin, np.arccos, np.tan, np.arctan, np.log, np.log10]
