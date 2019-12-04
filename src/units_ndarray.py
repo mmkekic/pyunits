@@ -47,6 +47,18 @@ class phval(np.ndarray):
     def __str__(self):
         return  (self.values.__str__()) + " eV^"+str(self.units)
 
+    def str(self, unit):
+        """returns the value with the units labeled by the string "unit" """
+        if isinstance(unit, str):
+            un=phval(1,unit)         
+            if self.v[1]==un.v[1]:
+                return str(self.v[0]/un.v[0]) +" "+ unit
+            else:
+                raise UnitError("Invalit units")
+        else:
+            raise unitError("Argument should be a string")
+
+    
     def __getitem__(self, indx):
         return phval(self.values[indx], self.units)
 
