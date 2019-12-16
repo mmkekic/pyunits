@@ -16,7 +16,7 @@ class phval(np.ndarray):
             obj     = np.multiply(input_array, val)
             units   = pw
         else:
-            raise TypeError
+            raise UnitError("Not possible to create the units instance")
 
         obj = np.asarray(obj).view(cls)
         obj.units = units
@@ -100,7 +100,7 @@ class phval(np.ndarray):
             return phval(ufunc(*casted_inputs), units=units)
 
         else:
-            raise TypeError
+            raise UnitError("ufunc error")
 
     def __array_finalize__(self, obj):
         if obj is None: return
