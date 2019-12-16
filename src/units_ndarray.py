@@ -56,8 +56,8 @@ class phval(np.ndarray):
         """returns the value with the units labeled by the string "unit" """
         if isinstance(unit, str):
             un=phval(1,unit)         
-            if self.v[1]==un.v[1]:
-                return str(self.v[0]/un.v[0]) +" "+ unit
+            if self.units==un.units:
+                return str((self/un).view(np.ndarray)) +" "+ unit
             else:
                 raise UnitError("Invalit units")
         else:
