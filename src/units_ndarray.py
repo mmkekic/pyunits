@@ -40,12 +40,13 @@ class phval(np.ndarray):
         """It returs the arguments for the phval initialization with values "a" and units given 
         by the string "st" """
         cmd="units -u natural "
-        out=os.popen(cmd+st).read().split()
+        out=os.popen(cmd + "\"" + st + "\"").read().split()
         if out[-2]=="/":
             return (a*float(out[-3]), -1 if len(out[-1].split("^"))<2 else -int(out[-1].split("^")[-1]))
         else:
             return (a*float(out[-2]), 1 if len(out[-1].split("^"))<2 else int(out[-1].split("^")[-1]))
 
+        
     def __repr__(self):
         return  (self.values.__repr__()) + " eV^"+str(self.units)
 
