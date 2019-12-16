@@ -14,6 +14,7 @@ def search(st):
 
 class phval(np.ndarray):
     def __new__(cls, input_array=None, units=None):
+        name=None
         if isinstance(input_array,str) and units==None:
             units=input_array
             input_array=np.array(1.)
@@ -21,6 +22,7 @@ class phval(np.ndarray):
             units = units
             obj   = input_array
         elif isinstance(units, str):
+            name=units
             val, pw = cls.strunit(1., units)
             obj     = np.multiply(input_array, val)
             units   = pw
@@ -29,6 +31,7 @@ class phval(np.ndarray):
 
         obj = np.asarray(obj).view(cls)
         obj.units = units
+        obj.name = name
         return obj
 
     @property
@@ -79,13 +82,17 @@ class phval(np.ndarray):
     def str(self, unit):
         """returns the value with the units labeled by the string "unit" """
         if isinstance(unit, str):
-            un=phval(1,unit)         
-            if self.units==un.units:
-                return str((self/un).view(np.ndarray)) +" "+ unit
-            else:
-                raise UnitError("Invalit units")
+            un=phval(1,unit)
+        elif isinstance(unit, phval) and  isinstance(unit.name,str):
+            un=unit
+            unit=un.name
         else:
-            raise unitError("Argument should be a string")
+            raise unitError("Argument should be a string or phval with name")
+
+        if self.units==un.units:
+            return str((self/un).view(np.ndarray)) +" "+ unit
+        else:
+            raise UnitError("Invalit units")
 
     
     def __getitem__(self, indx):
