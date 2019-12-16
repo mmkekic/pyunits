@@ -13,7 +13,10 @@ def search(st):
 
 
 class phval(np.ndarray):
-    def __new__(cls, input_array, units=None):
+    def __new__(cls, input_array=None, units=None):
+        if isinstance(input_array,str) and units==None:
+            units=input_array
+            input_array=np.array(1.)
         if isinstance(units, int):
             units = units
             obj   = input_array
