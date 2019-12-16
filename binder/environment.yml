@@ -1,0 +1,17 @@
+dependencies:
+- python       = 3.7
+- cython
+- jupyter
+- jupyterlab
+- matplotlib
+- notebook
+- numpy
+- pandas
+- seaborn
+- pytest
+- scipy
+- flaky
+- hypothesis
+- pytest-xdist
+- pip:
+  - requests

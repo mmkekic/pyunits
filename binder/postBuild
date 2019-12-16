@@ -1,0 +1,7 @@
+wget https://ftp.gnu.org/gnu/units/units-2.19.tar.gz
+tar -xvf units-2.19.tar.gz
+cd units-2.19
+./configure --prefix=$HOME
+make && make install
+cd ..
+mv units .units
