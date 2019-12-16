@@ -27,12 +27,14 @@ class phval(np.ndarray):
         return self.view(np.ndarray)
 
     def val_u(self, uname):
-        un=phval(1., uname)
-        if un.units == self.units:
-            return (self/phval(1., uname)).view(np.ndarray)
+        if isinstance(uname,str):
+            un=phval(1., uname)
+            if un.units == self.units:
+                return (self/phval(1., uname)).view(np.ndarray)
+            else:
+                raise UnitError("val_u: Wrong units to show the value")
         else:
-            raise UnitError("val_u: Wrong units to show the value")
-        
+               raise UnitError("val_u: Argument must be a string")
     @staticmethod
     def strunit(a,st):
         """It returs the arguments for the phval initialization with values "a" and units given 
