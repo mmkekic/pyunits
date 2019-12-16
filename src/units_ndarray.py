@@ -87,6 +87,12 @@ class phval(np.ndarray):
             else:
                 raise UnitError("Values with units only have integer powers")
 
+        if ufunc == np.square:
+            units = list_units[0] * 2
+            return phval(ufunc(*casted_inputs), units=units)
+            
+
+
         if ufunc in UNITLESS_UFUNC:
             units = list_units[0]
             if units==0:
