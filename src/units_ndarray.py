@@ -6,6 +6,12 @@ UNITLESS_UFUNC   = {np.sin, np.cos, np.exp, np.arcsin, np.arccos, np.tan, np.arc
 
 class UnitError(Exception) : pass
 
+def search(st):
+    cmd="echo \"search " + st +"\" | units "
+    out=os.popen(cmd)
+    print(out.read().split("You have: ")[1])
+
+
 class phval(np.ndarray):
     def __new__(cls, input_array, units=None):
         if isinstance(units, int):
